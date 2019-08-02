@@ -41,4 +41,18 @@ public class KitchenResource {
 		}
 		return Response.ok(kitchenList).build();
 	}
+	
+	@POST
+	@Path("OrderReady")
+	@Produces("application/json")
+	public Response orderReady(KitchenProductModel model) {
+		ResponseModel response = null;
+		boolean check = KitchenService.getInstance().orderReady(model);
+		if (check) {
+			response = new ResponseModel(200, "Success", true);
+		} else {
+			response = new ResponseModel(404, "Failure", false);
+		}
+		return Response.ok(response).build();
+	}
 }

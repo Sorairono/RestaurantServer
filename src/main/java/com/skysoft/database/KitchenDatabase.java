@@ -7,7 +7,10 @@ import org.bson.Document;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
+import com.skysoft.core.Constant;
 import com.skysoft.model.KitchenProductModel;
+
+import static com.mongodb.client.model.Filters.*;
 
 public class KitchenDatabase {
 	private MongoCollection<Document> kitchen;
@@ -22,7 +25,9 @@ public class KitchenDatabase {
 			List<Document> newProductList = new ArrayList<Document>();
 			for (int i = 0; i < model.size(); i++) {
 				try {
-					newProductList.add(Document.parse(gson.toJson(model.get(i))));
+					KitchenProductModel newKitchenProduct = model.get(i);
+					newKitchenProduct.setTimeOrdered(Constant.getCurrentTimeAsString());
+					newProductList.add(Document.parse(gson.toJson(newKitchenProduct)));
 				} catch (Exception e) {
 					// TODO: handle exception
 					return false;
@@ -35,7 +40,7 @@ public class KitchenDatabase {
 			return false;
 		}
 	}
-	
+
 	public List<KitchenProductModel> getKitchenList() {
 		try {
 			List<KitchenProductModel> kitchenList = new ArrayList<KitchenProductModel>();
@@ -49,4 +54,17 @@ public class KitchenDatabase {
 		}
 		return null;
 	}
+
+	public boolean orderReady(KitchenProductModel model) {
+		try {
+			kitchen.deleteOne(and(eq("productName", model.getProductName()),
+					eq("timeOrdered", model.getTimeOrdered()), eq("amount", model.getAmount()),
+							eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())));
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+	}
+
 }

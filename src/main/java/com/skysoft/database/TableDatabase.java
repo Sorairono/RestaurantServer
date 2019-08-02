@@ -7,7 +7,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import com.google.gson.Gson;
-
+import com.skysoft.core.Constant;
 import com.skysoft.model.CartProductModel;
 import com.skysoft.model.TableModel;
 import com.skysoft.model.ZoneModel;
@@ -147,7 +147,8 @@ public class TableDatabase {
 			List<Bson> updates = new ArrayList<Bson>();
 			for (int i = model.getLowerBound(); i <= model.getUpperBound(); i++) {
 				updates.add(combine(set("customerProduct." + i + ".orderSent", true),
-						set("customerProduct." + i + ".status", "Waiting")));
+						set("customerProduct." + i + ".status", "Waiting"),
+						set("customerProduct." + i + ".timeOrdered", Constant.getCurrentTimeAsString())));
 			}
 			tables.updateOne(
 					combine(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),

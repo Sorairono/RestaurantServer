@@ -44,4 +44,8 @@ public class KitchenService {
 	public List<KitchenProductModel> getKitchenList() {
 		return kitchenDatabase.getKitchenList();
 	}
+	
+	public boolean orderReady(KitchenProductModel model) {
+		return kitchenDatabase.orderReady(model);
+	}
 }

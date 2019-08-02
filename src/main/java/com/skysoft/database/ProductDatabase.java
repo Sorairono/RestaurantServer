@@ -7,9 +7,6 @@ import org.bson.Document;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
-import com.skysoft.core.Constant;
-import com.skysoft.core.MongoDB;
-import com.skysoft.model.CategoryModel;
 import com.skysoft.model.ProductModel;
 import com.skysoft.request.FindProductByType;
 

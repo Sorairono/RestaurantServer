@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import com.skysoft.model.ProductModel;
 import com.skysoft.request.FindProductByType;
+import com.skysoft.response.ResponseModel;
 import com.skysoft.service.ProductService;
 
 @Path("Product")
@@ -54,7 +55,7 @@ public class ProductResource {
 //		}
 //		return Response.ok(response).build();
 //	}
-	
+//	
 //	@POST
 //	@Path("InitializeProducts")
 //	@Produces("application/json")

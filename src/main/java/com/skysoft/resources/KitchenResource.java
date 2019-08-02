@@ -1,5 +1,6 @@
 package com.skysoft.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.POST;
@@ -26,5 +27,18 @@ public class KitchenResource {
 			response = new ResponseModel(404, "Failure", false);
 		}
 		return Response.ok(response).build();
+	}
+	
+	@POST
+	@Path("GetKitchenList")
+	@Produces("application/json")
+	public Response getKitchenList() {
+		List<KitchenProductModel> kitchenList = new ArrayList<KitchenProductModel>();
+		try {
+			kitchenList = KitchenService.getInstance().getKitchenList();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return Response.ok(kitchenList).build();
 	}
 }

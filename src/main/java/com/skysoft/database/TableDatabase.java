@@ -94,7 +94,7 @@ public class TableDatabase {
 			tables.updateOne(and(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),
 					push("customerProduct", Document.parse(gson.toJson(newCartProduct))));
 			boolean updated = updateTableBill(TableService.getInstance().updateTableBill(gson.fromJson(tables
-					.find(combine(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())))
+					.find(and(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())))
 					.first().toJson(), TableModel.class)));
 			if (!updated) {
 				return false;
@@ -151,7 +151,7 @@ public class TableDatabase {
 						set("customerProduct." + i + ".timeOrdered", Constant.getCurrentTimeAsString())));
 			}
 			tables.updateOne(
-					combine(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),
+					and(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),
 					combine(updates));
 			return true;
 		} catch (Exception e) {
@@ -163,7 +163,7 @@ public class TableDatabase {
 	private boolean updateTableBill(TableBillModel model) {
 		try {
 			tables.updateOne(
-					combine(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),
+					and(eq("zoneLetter", model.getZoneLetter()), eq("tableNumber", model.getTableNumber())),
 					combine(set("subTotal", model.getSubTotal()), set("tax", model.getTax()),
 							set("total", model.getTotal()), set("discount", model.getDiscount()),
 							set("balance", model.getBalance())));
